@@ -1,0 +1,30 @@
+a、训练VOC07+12数据集
+  1. 数据集的准备
+     本文使用VOC格式进行训练，训练前需要下载好VOC07+12的数据集，解压后放在根目录
+     檔案放在VOC/VOC2007中, 會使用到annotations, Imagesets, JPEGImages
+
+
+  2. 数据集的处理
+     VOC的資料集中已經切好train, val和test, 根據想要使用的部分在Imagesets/Main中另外建一份txt檔案, 
+     命名成新的train.txt / val.txt, 或是train0712.txt / val0712.txt. 
+     修改voc_annotation.py里面的annotation_mode=2，运行voc_annotation.py生成根目录下的2007_train.txt和2007_val.txt。
+     在voc_annotation.py中設定VOCdevkit_sets  = [('2007', 'train'), ('2007', 'val')], train/val要符合上面
+     train.txt / val.txt的命名, 亦可改為[('2007', 'train0712'), ('2007', 'val')], 最後生成的檔案名稱就
+     變成2007_train0712.txt, 2007_val0712.txt.
+
+  3. 开始网络训练
+     train.py的默认参数用于训练VOC数据集，直接运行train.py即可开始训练。
+     eager模型可註解掉, 用不到.
+     修改以下五個路徑至自己設定的資料夾和檔案
+     classes_path
+     anchors_path
+     model_path
+     train_annotation_path
+     val_annotation_path
+
+  4. 训练结果预测
+     训练结果预测需要用到两个文件，分别是yolo.py和predict.py。
+     首先需要去yolo.py里面修改model_path以及classes_path成自己設定的。
+     model_path指向训练好的权值文件，在logs文件夹里。
+     classes_path指向检测类别所对应的txt。
+     完成修改后就可以运行predict.py进行检测了。运行后输入图片路径即可检测。
